@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "es6", // 出力するJavaScriptのバージョン
+        "module": "esnext", // モジュールの形式
+        "moduleResolution": "node", // モジュール解決方法
+        "baseUrl": ".", // プロジェクトの基準となるディレクトリ
+        "paths": {
+            "@/*": ["./*"] // エイリアスの設定。例: '@/components' は 'src/components' を指す
+        }
+    },
+    "include": [
+        "./**/*" // プロジェクトのソースコードを指定
+    ],
+    "exclude": [
+        "node_modules" // 依存ライブラリを除外
+    ]
+}
