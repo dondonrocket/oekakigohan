@@ -8,4 +8,3 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // routes/api.php
-Route::post('/analyze-image', [App\Http\Controllers\ImageAnalysisController::class, 'analyze']);
