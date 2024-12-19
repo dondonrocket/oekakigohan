@@ -1,66 +1,138 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# おえかきごはん：要件定義（Webアプリ版）
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 1. 概要
+- **プロジェクト名:** おえかきごはん
+- **目的:**
+  - 子どもが描いた絵をもとに親子で楽しめる料理体験を提供し、創造性や食育を楽しく促進する。
+- **スローガン:** 「正しいよりは楽しい」
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 2. 想定ユーザー
+1. **主要ユーザー:**
+   - 3～8歳の子どもとその親。
+2. **サブユーザー:**
+   - 幼稚園や保育園の先生、教育関係者。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 3. 必須要件（MVP機能）
 
-## Learning Laravel
+### 3.1 絵のアップロード機能
+- **概要:**  
+  子どもが描いた絵をアップロードできる機能。
+- **要件:**
+  - ユーザーは画像ファイル（JPEG/PNG形式）をアップロード可能。
+  - 画像ファイルサイズの上限は10MB。
+  - ユーザーのデバイスから簡単にアップロードできる直感的なUI。
+- **フロントエンド:**
+  - Vue.js 3で実装。
+- **バックエンド:**
+  - Laravel 11で画像を受け取り、サーバーまたはクラウドストレージに保存。
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 3.2 絵の解析機能
+- **概要:**  
+  アップロードされた絵を解析し、描かれた要素を特定。
+- **要件:**
+  - Google Cloud Vision APIを使用し、以下の情報を解析：
+    - **食材:** 野菜、果物などを特定。
+    - **料理:** 明確な料理（例: ピザ、ハンバーガー）を判別。
+    - **色・形状:** 抽象的な絵の場合、色や形状をヒントに食材や料理を連想。
+  - **二段階解析:**
+    1. 明確に一致する食材や料理がある場合、その結果を提示。
+    2. 一致しない場合、抽象的な料理アイデアを提案（例: 色や形状に基づく創作料理）。
+- **フロントエンド:**
+  - 絵の解析結果を、解析された内容（食材や料理名）とともに表示。
+- **バックエンド:**
+  - Laravel 11でGoogle Cloud Vision APIを呼び出し、結果をフロントエンドに返却。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### 3.3 レシピ提案機能
+- **概要:**  
+  絵の解析結果を基に、親子で作れる簡単なレシピを提案する機能。
+- **要件:**
+  - 外部API（例: 楽天レシピAPI）を利用してレシピを取得。
+  - レシピの条件：
+    - 難易度が低く、子どもが関われる工程が含まれる。
+    - 家庭で入手しやすい食材を優先。
+  - 提案のパターン：
+    1. **食材中心:** 絵の解析結果に基づき、該当食材を使ったレシピを表示。
+    2. **創造型:** 抽象的な場合、親子で楽しめる創作レシピを提案。
+- **フロントエンド:**
+  - レシピをカード形式で表示（料理画像、タイトル、簡単な説明）。
+- **バックエンド:**
+  - Google Cloud Vision APIの解析結果を基に外部APIを呼び出し、条件に合うレシピを取得。
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+### 3.4 レシピ保存機能
+- **概要:**  
+  ユーザーが気に入ったレシピを保存できる機能。
+- **要件:**
+  - **保存方法:** ログイン不要、ブラウザのローカルストレージを利用してデータを保存。
+  - **保存内容:**
+    - レシピタイトル
+    - 料理画像URL
+    - レシピ詳細ページへの外部リンク
+- **UI:** 保存ボタンと「保存済みレシピを見る」機能を提供。
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+## 4. 非機能要件
+1. **シンプルな操作性:**
+   - ユーザーが迷わない直感的なUI/UXを設計。
+2. **高速処理:**
+   - 絵の解析とレシピ提案は5秒以内に結果が出るように調整。
+3. **デバイス対応:**
+   - デスクトップ、タブレット、スマートフォンで快適に動作。
+4. **セキュリティ:**
+   - アップロードされた画像は外部に公開されないように安全に管理。
+   - 保存期間は一定期間後に削除（例: 30日）。
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## 5. 技術スタック
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### フロントエンド
+- **フレームワーク:** Vue.js 3
+- **UIライブラリ:** VuetifyまたはElement Plus
+- **画像アップロード:** vue-filepondまたはaxiosを活用
+- **状態管理:** PiniaまたはVuex
+- **ルーティング:** Vue Router
 
-## Security Vulnerabilities
+### バックエンド
+- **フレームワーク:** Laravel 11
+- **画像処理:** Intervention Imageライブラリを利用（サムネイル生成など）。
+- **API連携:** Google Cloud Vision API（解析）、楽天レシピAPI（レシピ検索）。
+- **データベース:** MySQLまたはSQLite（ログなしなら軽量DBでも可）。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### インフラ
+- **ホスティング:**
+  - フロントエンド: NetlifyまたはVercel。
+  - バックエンド: AWS EC2またはHeroku。
+- **画像ストレージ:**
+  - AWS S3またはLaravel内のローカルストレージ。
+- **CI/CD:** GitHub ActionsまたはGitLab CI/CD。
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 6. 開発スケジュール
+
+### フェーズ1（1～2か月）
+- 基本機能の実装：絵のアップロード、解析、レシピ提案機能。
+
+### フェーズ2（3か月目）
+- UI/UX改善、ローカルストレージを使ったレシピ保存機能を追加。
+
+### フェーズ3（4か月目以降）
+- ユーザーのフィードバックに基づき機能を微調整し、公開版をリリース。
+
+---
+
+## 7. 成果物
+- **リリース時:**
+  - 絵のアップロードからレシピ提案までがシンプルに動作するWebアプリ。
+  - ユーザー認証が不要で手軽に利用できる設計。
