@@ -1,10 +1,11 @@
 <?php
-
-use Illuminate\Http\Request;
+use App\Http\Controllers\ImageAnalysisController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::post('/contact', [ContactController::class, 'sendEmail']);
 
-// routes/api.php
+
+Route::post('/analyze-image', [ImageAnalysisController::class, 'analyzeImage']);
+
+

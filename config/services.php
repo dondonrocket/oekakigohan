@@ -35,9 +35,9 @@ return [
         ],
     ],
 
-    'google_cloud' => [
-    'api_key' => env('API_KEY'),
-],
+    'rakuten' => [
+        'application_id' => env('RAKUTEN_APPLICATION_ID'),
+    ],
 
 
 ];

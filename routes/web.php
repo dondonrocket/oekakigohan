@@ -1,17 +1,35 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ImageAnnotatorController;
+use App\Http\Controllers\ImageController;
 
-// デフォルトのwelcomeビュー
-Route::get('/', function () {
-    return view('welcome');
+// Vue.js アプリケーションを表示するビューを一つのルートにまとめる
+Route::get('/{any}', function () {
+    return view('vue-app'); // Vue.js アプリケーションのエントリポイントを表示
+})->where('any', '.*'); // 任意のパスをキャッチ
+
+//セッション作成
+Route::post('/session/set-image', [ImageController::class, 'storeImageInSession']);
+
+//セッション保持
+Route::get('/session/get-image', function () {
+    $imagePath = session('image_path'); // セッションから画像パスを取得
+
+    if ($imagePath) {
+        return response()->json([
+            'image_path' => $imagePath, // セッションに画像が保存されていればそのパスを返す
+        ]);
+    }
+
+    return response()->json([
+        'image_path' => null, // 画像が保存されていなければnullを返す
+    ]);
 });
 
-// image_annotator へのアクセスで Vue.js コンポーネントを表示
-Route::get('image_annotator', function () {
-    return view('index');  // 'resources/views/index.blade.php' を返す
-});
+// セッション削除
+Route::get('/session/delete-image', function () {
+    // セッションから画像パスを削除
+    session()->forget('temporary_image');
 
-// 画像解析処理を POST リクエストで実行
-Route::post('image_annotator/extract', [ImageAnnotatorController::class, 'extract']); // 画像解析処理
+    return response()->noContent();
+});
