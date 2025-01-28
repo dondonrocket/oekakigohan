@@ -176,7 +176,7 @@ export default {
 
             try {
                 const response = await axios.post(
-                    "http://oekakigohan.com/api/analyze-image",
+                    "https://oekakigohan.com/api/analyze-image",
                     formData,
                     { headers: { "Content-Type": "multipart/form-data" } } // 重要
                 );
