@@ -168,14 +168,14 @@ class ImageAnalysisController extends Controller
     private function fetchRakutenCategoryRanking($matchedCategory): array
     {
         // 楽天API URL
-        $rakutenApiUrl = "https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?format=json&applicationId=" . env('RAKUTEN_APPLICATION_ID') . "&categoryId={$matchedCategory}";
+        $rakutenApiUrl = "https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426?format=json&applicationId=" . config('services.rakuten.application_id') . "&categoryId={$matchedCategory}";
+
         // 楽天APIからデータを取得
         $response = Http::get($rakutenApiUrl);
 
         // エラーチェック
         if ($response->failed()) {
             Log::error('楽天APIエラー: ' . $response->status());
-                Log::error('楽天APIレスポンス: ' . $response->body()); // 追加
             return ['error' => '楽天APIの呼び出しに失敗しました。'];
         }
         // レスポンスからランキングデータを取得
