@@ -175,6 +175,7 @@ class ImageAnalysisController extends Controller
         // エラーチェック
         if ($response->failed()) {
             Log::error('楽天APIエラー: ' . $response->status());
+                Log::error('楽天APIレスポンス: ' . $response->body()); // 追加
             return ['error' => '楽天APIの呼び出しに失敗しました。'];
         }
         // レスポンスからランキングデータを取得
