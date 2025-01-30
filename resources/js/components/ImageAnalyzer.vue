@@ -75,6 +75,7 @@
                     <!-- 画像保存ボタン -->
                     <div class="button-container">
                         <button
+                            @touchstart="saveAsImage('recipe-result')"
                             @click="() => saveAsImage('recipe-result')"
                             class="save-button"
                         >
