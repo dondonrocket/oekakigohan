@@ -54,6 +54,7 @@ export default {
     mounted() {
         this.updateSpaceBetween(); // 初期値を計算
         window.addEventListener("resize", this.updateSpaceBetween);
+        console.log("Category Ranking:", this.categoryRanking);
     },
     beforeDestroy() {
         window.removeEventListener("resize", this.updateSpaceBetween);
