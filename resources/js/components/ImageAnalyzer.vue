@@ -242,7 +242,7 @@ export default {
                     return;
                 }
 
-                // **スマホ用に viewport を一時変更**
+                // **viewport を一時変更**
                 const metaViewport = document.querySelector('meta[name="viewport"]');
                 const originalViewportContent = metaViewport ? metaViewport.content : "";
                 if (metaViewport) {
@@ -278,22 +278,35 @@ export default {
 
                 const imageData = canvas.toDataURL("image/png");
 
-                // **スマホでは `window.open()` を試す**
+                // **スマホでの動作**
                 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
                 if (isMobile) {
-                    const newTab = window.open();
-                    newTab.document.write(`<img src="${imageData}" style="width:100%">`);
-                } else {
-                    const link = document.createElement("a");
-                    link.download = `${targetId}.png`;
-                    link.href = imageData;
-                    document.body.appendChild(link);
+                    try {
+                        // **iOS Safari / Android Chrome の場合**
+                        const newTab = window.open();
+                        newTab.document.write(`<img src="${imageData}" style="width:100%">`);
 
-                    setTimeout(() => {
-                        link.click();
-                        document.body.removeChild(link);
-                    }, 100);
+                        // **新しいタブが開いたらアラートを出す**
+                        setTimeout(() => {
+                            newTab.alert("画像を長押しして保存してください");
+                        }, 500);
+
+                        return; // ここで処理終了（`download` は効かないため）
+                    } catch (err) {
+                        console.error("新しいタブを開けませんでした:", err);
+                    }
                 }
+
+                // **PC または `download` が機能するブラウザ**
+                const link = document.createElement("a");
+                link.download = `${targetId}.png`;
+                link.href = imageData;
+
+                document.body.appendChild(link);
+                setTimeout(() => {
+                    link.click();
+                    document.body.removeChild(link);
+                }, 100);
 
                 // **元の表示状態に戻す**
                 captureElement.style.display = "none";
