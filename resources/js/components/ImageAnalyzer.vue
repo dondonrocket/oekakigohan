@@ -242,42 +242,71 @@ export default {
                     return;
                 }
 
-                //表示する部分を変更
-                const captureElement =
-                    document.getElementById("capture_content");
-                const displayElement =
-                    document.getElementById("display_content");
+                // **スマホ用に viewport を一時変更**
+                const metaViewport = document.querySelector('meta[name="viewport"]');
+                const originalViewportContent = metaViewport ? metaViewport.content : "";
+                if (metaViewport) {
+                    metaViewport.content = "width=1200";
+                }
+
+                // **表示調整**
+                const captureElement = document.getElementById("capture_content");
+                const displayElement = document.getElementById("display_content");
 
                 if (!captureElement) {
                     console.error("キャプチャ用の要素が見つかりません。");
                     return;
                 }
 
-                // キャプチャ用HTMLを一時的に表示
                 captureElement.style.display = "block";
-                //解析結果表示用を非表示
                 displayElement.style.display = "none";
 
-                const canvas = await html2canvas(target);
-                const link = document.createElement("a");
-                link.download = `${targetId}.png`;
-                link.href = canvas.toDataURL("image/png");
-                link.click();
+                // **少し待つ**
+                await new Promise(resolve => setTimeout(resolve, 100));
 
-                // キャプチャ用HTMLを再び非表示にする
+                // **Canvas 生成**
+                const canvas = await html2canvas(target, {
+                    allowTaint: true,
+                    useCORS: true,
+                    scale: 2, // スマホ高解像度対応
+                });
+
+                // **viewport を元に戻す**
+                if (metaViewport) {
+                    metaViewport.content = originalViewportContent;
+                }
+
+                const imageData = canvas.toDataURL("image/png");
+
+                // **スマホでは `window.open()` を試す**
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                if (isMobile) {
+                    const newTab = window.open();
+                    newTab.document.write(`<img src="${imageData}" style="width:100%">`);
+                } else {
+                    const link = document.createElement("a");
+                    link.download = `${targetId}.png`;
+                    link.href = imageData;
+                    document.body.appendChild(link);
+
+                    setTimeout(() => {
+                        link.click();
+                        document.body.removeChild(link);
+                    }, 100);
+                }
+
+                // **元の表示状態に戻す**
                 captureElement.style.display = "none";
-                //解析結果を再び表示する。
                 displayElement.style.display = "block";
 
-                // 画像保存後にセッションから画像情報を削除
+                // **セッションデータ削除**
                 await this.deleteImageSession();
             } catch (error) {
                 console.error("画像保存中にエラーが発生しました:", error);
-                alert(
-                    "画像保存中にエラーが発生しました。もう一度試してください。"
-                );
+                alert("画像保存中にエラーが発生しました。もう一度試してください。");
             }
         },
+
 
         showErrorMessage(message) {
             Swal.fire({
