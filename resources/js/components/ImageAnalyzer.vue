@@ -238,20 +238,29 @@ export default {
                 const target = document.getElementById(targetId);
                 if (!target) {
                     console.error(`ID "${targetId}" の要素が見つかりません。`);
-                    alert("保存対象が表示されていません。");
+                    Swal.fire({
+                        icon: "error",
+                        title: "エラー",
+                        text: "保存対象が表示されていません。",
+                        confirmButtonText: "OK",
+                    });
                     return;
                 }
 
-                // **viewport を一時変更**
-                const metaViewport = document.querySelector('meta[name="viewport"]');
-                const originalViewportContent = metaViewport ? metaViewport.content : "";
+                const metaViewport = document.querySelector(
+                    'meta[name="viewport"]'
+                );
+                const originalViewportContent = metaViewport
+                    ? metaViewport.content
+                    : "";
                 if (metaViewport) {
                     metaViewport.content = "width=1200";
                 }
 
-                // **表示調整**
-                const captureElement = document.getElementById("capture_content");
-                const displayElement = document.getElementById("display_content");
+                const captureElement =
+                    document.getElementById("capture_content");
+                const displayElement =
+                    document.getElementById("display_content");
 
                 if (!captureElement) {
                     console.error("キャプチャ用の要素が見つかりません。");
@@ -261,43 +270,45 @@ export default {
                 captureElement.style.display = "block";
                 displayElement.style.display = "none";
 
-                // **少し待つ**
-                await new Promise(resolve => setTimeout(resolve, 100));
+                await new Promise((resolve) => setTimeout(resolve, 100));
 
-                // **Canvas 生成**
                 const canvas = await html2canvas(target, {
                     allowTaint: true,
                     useCORS: true,
-                    scale: 2, // スマホ高解像度対応
+                    scale: 2,
                 });
 
-                // **viewport を元に戻す**
                 if (metaViewport) {
                     metaViewport.content = originalViewportContent;
                 }
 
                 const imageData = canvas.toDataURL("image/png");
 
-                // **スマホでの動作**
-                const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                const isMobile = /iPhone|iPad|iPod|Android/i.test(
+                    navigator.userAgent
+                );
                 if (isMobile) {
                     try {
-                        // **iOS Safari / Android Chrome の場合**
                         const newTab = window.open();
-                        newTab.document.write(`<img src="${imageData}" style="width:100%">`);
+                        newTab.document.write(
+                            `<img src="${imageData}" style="width:100%">`
+                        );
 
-                        // **新しいタブが開いたらアラートを出す**
                         setTimeout(() => {
-                            newTab.alert("画像を長押しして保存してください");
+                            Swal.fire({
+                                icon: "info",
+                                title: "画像の保存方法",
+                                text: "画像を長押しして保存してください。",
+                                confirmButtonText: "OK",
+                            });
                         }, 500);
 
-                        return; // ここで処理終了（`download` は効かないため）
+                        return;
                     } catch (err) {
                         console.error("新しいタブを開けませんでした:", err);
                     }
                 }
 
-                // **PC または `download` が機能するブラウザ**
                 const link = document.createElement("a");
                 link.download = `${targetId}.png`;
                 link.href = imageData;
@@ -307,26 +318,41 @@ export default {
                     link.click();
                     document.body.removeChild(link);
                 }, 100);
+            } catch (error) {
+                console.error("画像の保存処理中にエラーが発生しました:", error);
+                Swal.fire({
+                    icon: "error",
+                    title: "エラー",
+                    text: "画像の保存に失敗しました。",
+                    confirmButtonText: "OK",
+                });
+            } finally {
+                // **エラーの有無に関係なく実行**
+                const captureElement =
+                    document.getElementById("capture_content");
+                const displayElement =
+                    document.getElementById("display_content");
 
-                // **元の表示状態に戻す**
-                captureElement.style.display = "none";
-                displayElement.style.display = "block";
+                if (captureElement && displayElement) {
+                    captureElement.style.display = "none";
+                    displayElement.style.display = "block";
+                }
 
                 // **セッションデータ削除**
                 await this.deleteImageSession();
-            } catch (error) {
-                console.error("画像保存中にエラーが発生しました:", error);
-                alert("画像保存中にエラーが発生しました。もう一度試してください。");
             }
         },
-
 
         showErrorMessage(message) {
             Swal.fire({
                 title: "エラー",
-                text: message,
+                text: "ごめんなさい。レシピを作れませんでした。もう一度お試し下さい。",
                 icon: "error",
                 confirmButtonText: "OK",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload(); // 例: ページをリロードする
+                }
             });
         },
 
