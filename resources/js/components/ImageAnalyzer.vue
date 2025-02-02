@@ -2,11 +2,15 @@
     <div class="description" id="recipe-result">
         <!-- 結果が未表示の場合にのみ表示 -->
         <div v-if="!hasResult">
-            <h2 class="description-h">
-                "<span class="first-letter">一</span>緒に"が<br
-                    class="responsive-br"
-                /><span class="first-letter">一</span>番楽しい
-            </h2>
+            <div class="sp-description">
+                <h2 class="description-h">
+                    <span class="first-letter">子</span>どもの想像力が、<br
+                        class="responsive-br"
+                    />
+                    <span class="first-letter">そ</span
+                    >のままおいしいごはんになる！
+                </h2>
+            </div>
             <div class="flex-responsive">
                 <div class="main_left">
                     <div class="main_image"></div>
@@ -287,25 +291,42 @@ export default {
                 const isMobile = /iPhone|iPad|iPod|Android/i.test(
                     navigator.userAgent
                 );
+
                 if (isMobile) {
                     try {
-                        const newTab = window.open();
-                        newTab.document.write(
-                            `<img src="${imageData}" style="width:100%">`
-                        );
+                        Swal.fire({
+                            icon: "info",
+                            title: "画像の保存方法",
+                            text: "画像を長押しして保存してください。",
+                            confirmButtonText: "OK",
+                        }).then(() => {
+                            const newTab = window.open();
 
-                        setTimeout(() => {
-                            Swal.fire({
-                                icon: "info",
-                                title: "画像の保存方法",
-                                text: "画像を長押しして保存してください。",
-                                confirmButtonText: "OK",
-                            });
-                        }, 500);
+                            if (!newTab) {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "エラー",
+                                    text: "ポップアップブロックにより、新しいタブを開けませんでした。",
+                                    confirmButtonText: "OK",
+                                });
+                                return;
+                            }
+
+                            newTab.document.write(
+                                `<img src="${imageData}" style="width:100%">`
+                            );
+                            newTab.focus();
+                        });
 
                         return;
                     } catch (err) {
                         console.error("新しいタブを開けませんでした:", err);
+                        Swal.fire({
+                            icon: "error",
+                            title: "エラー",
+                            text: "予期しないエラーが発生しました。",
+                            confirmButtonText: "OK",
+                        });
                     }
                 }
 
@@ -431,6 +452,10 @@ label:hover {
     color: #555;
 }
 
+.sp-description {
+    position: relative;
+}
+
 .description {
     padding-bottom: 50px;
     padding-top: 20px;
@@ -443,6 +468,7 @@ label:hover {
 }
 
 .description-h {
+    position: relative;
     text-align: center;
     width: 90%;
     margin-top: 10px;
@@ -591,7 +617,12 @@ label:hover {
 
 /* メディアクエリで画面幅に応じた調整 */
 @media (max-width: 1000px) {
+    .sp-description {
+        position: relative;
+    }
+
     .description-h {
+        position: relative;
         font-size: 1.8rem; /* タイトル文字を小さくする */
     }
     .flex-responsive {
@@ -612,7 +643,12 @@ label:hover {
 
 /* メディアクエリで画面幅に応じた調整 */
 @media (max-width: 768px) {
+    .sp-description {
+        position: relative;
+    }
+
     .description-h {
+        position: relative;
         font-size: 1.5rem; /* タイトル文字を小さくする */
         margin-top: 20px;
     }
@@ -633,13 +669,27 @@ label:hover {
 }
 
 @media (max-width: 635px) {
+    .sp-description {
+        position: relative;
+    }
+
+    .description-h {
+        position: relative;
+    }
+
     .main_left {
         width: 75%;
     }
 }
 
 @media (max-width: 480px) {
+    .sp-description {
+        position: relative;
+    }
+
     .description-h {
+        position: absolute;
+        left: 30px;
         font-size: 1.3rem; /* タイトル文字を小さくする */
         margin-top: 10px;
         margin-bottom: 20px;

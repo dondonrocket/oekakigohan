@@ -86,6 +86,7 @@ h2 {
     padding: 5px 10px;
     border-radius: 50%;
     margin-right: 10px;
+    margin-left: 10px;
     flex-shrink: 0;
 }
 
