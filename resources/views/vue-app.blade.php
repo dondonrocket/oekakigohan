@@ -87,6 +87,10 @@ body {
     font-family: 'Noto Sans JP', sans-serif;
 }
 
+header {
+    position: fixed;
+}
+
 /* ロゴのサイズ調整 */
 .navbar-logo {
     height: 50px;
