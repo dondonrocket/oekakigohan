@@ -6,7 +6,7 @@
 
     <meta property="og:title" content="おえかきごはん - 子どものお絵かきがレシピに！">
     <meta property="og:description" content="子どものお絵かきを元に親子で作れるレシピを提案する楽しい食育アプリ！">
-    <meta property="og:image" content="https://oekakigohan.com/ogp-image.png">
+    <meta property="og:image" content="https://oekakigohan.com/images/ogp-image.png">
     <meta property="og:url" content="https://oekakigohan.com">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image"> <!-- Twitter用（LINEも対応） -->
@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
     <!--ファビコン-->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
+    <link rel="shortcut icon" href="/favicon.ico">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 

@@ -7,10 +7,9 @@
                     <span class="first-letter">子</span>どもの想像力が、<br
                         class="responsive-br"
                     />
-                    <span class="first-letter">そ</span
-                    >のままおいしい<br
+                    <span class="first-letter">そ</span>のままおいしい<br
                         class="responsive-br"
-                    />ごはんになる！
+                    /><span class="first-letter">ご</span>はんになる！
                 </h2>
             </div>
             <div class="flex-responsive">
@@ -20,7 +19,7 @@
                 <div class="main_right">
                     <div class="custom-bg-color">
                         <p class="description-p">
-                            子どもの絵から親子で作れる料理レシピを作成するアプリです。<br /><br />下の"画像を選ぶ"のボタンから画像を選んだ後に、"レシピを作成する"のボタンを押して下さい。
+                            子どもの絵から親子で作れる料理レシピを作成するアプリです。<br>画像を選んだ後に、レシピを作るのボタンを押すだけで完成！
                         </p>
                         <div class="flex">
                             <div class="flex-left">
@@ -691,7 +690,6 @@ label:hover {
 
     .description-h {
         position: absolute;
-        left: 30px;
         font-size: 1.3rem; /* タイトル文字を小さくする */
         margin-top: 10px;
         margin-bottom: 20px;
