@@ -368,7 +368,7 @@ export default {
         showErrorMessage(message) {
             Swal.fire({
                 title: "エラー",
-                text: "ごめんなさい。レシピを作れませんでした。もう一度お試し下さい。",
+                text: "ごめんなさい。レシピを作れませんでした。別の画像にするか、もう一度お試し下さい。",
                 icon: "error",
                 confirmButtonText: "OK",
             }).then((result) => {
