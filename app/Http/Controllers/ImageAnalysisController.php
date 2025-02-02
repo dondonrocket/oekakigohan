@@ -170,7 +170,7 @@ class ImageAnalysisController extends Controller
         // 類似度の高いカテゴリを返す
         if ($closestCategory !== null) {
             if (preg_match('/category\/([\d\-]+)\//', $closestCategory['categoryUrl'], $matches)) {
-                Log::info('類似カテゴリを選択:', ['categoryId' => $matches[1], 'categoryName' => $closestCategory['categoryName']]);
+                Log::info('類似カテゴリを選択:', ['categoryId' => $matches[1]]);
                 return $matches[1]; // 最も近いカテゴリのIDを返す
             }
         }
