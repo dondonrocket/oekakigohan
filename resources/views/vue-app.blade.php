@@ -85,10 +85,12 @@
 /* ベースフォント設定 */
 body {
     font-family: 'Noto Sans JP', sans-serif;
+    padding-top: 76px;
 }
 
 header {
     position: fixed;
+    width: 100%;
 }
 
 /* ロゴのサイズ調整 */

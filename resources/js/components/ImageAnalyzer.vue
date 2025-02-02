@@ -19,7 +19,7 @@
                 <div class="main_right">
                     <div class="custom-bg-color">
                         <p class="description-p">
-                            子どもの絵から親子で作れる料理レシピを作成するアプリです。<br>画像を選んだ後に、レシピを作るのボタンを押すだけで完成！
+                            子どもの絵から親子で作れる料理レシピを作成するアプリです。<br />画像を選んだ後に、レシピを作るのボタンを押すだけで完成！
                         </p>
                         <div class="flex">
                             <div class="flex-left">
@@ -508,9 +508,10 @@ label:hover {
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-    margin: 10px 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding-bottom: 30px;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .btn-circle-stitch {
@@ -699,7 +700,7 @@ label:hover {
     }
     .description-p {
         font-size: 16px;
-        font-weight: normal;
+        font-weight: bold;
         margin-bottom: 20px;
         text-align: left;
     }
