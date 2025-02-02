@@ -8,7 +8,9 @@
                         class="responsive-br"
                     />
                     <span class="first-letter">そ</span
-                    >のままおいしいごはんになる！
+                    >のままおいしい<br
+                        class="responsive-br"
+                    />ごはんになる！
                 </h2>
             </div>
             <div class="flex-responsive">
@@ -296,8 +298,8 @@ export default {
                     try {
                         Swal.fire({
                             icon: "info",
-                            title: "画像の保存方法",
-                            text: "画像を長押しして保存してください。",
+                            title: "レシピの保存方法",
+                            text: "レシピを長押しして画像で保存してください。",
                             confirmButtonText: "OK",
                         }).then(() => {
                             const newTab = window.open();
@@ -693,6 +695,9 @@ label:hover {
         font-size: 1.3rem; /* タイトル文字を小さくする */
         margin-top: 10px;
         margin-bottom: 20px;
+        text-align: left;
+        margin-left: 10px;
+        margin-right: auto;
     }
     .description-p {
         font-size: 16px;

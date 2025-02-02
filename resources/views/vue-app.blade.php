@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="おえかきごはん - 子どものお絵かきがレシピに！">
+    <meta property="og:description" content="子どものお絵かきを元に親子で作れるレシピを提案する楽しい食育アプリ！">
+    <meta property="og:image" content="https://oekakigohan.com/ogp-image.png">
+    <meta property="og:url" content="https://oekakigohan.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image"> <!-- Twitter用（LINEも対応） -->
     <title>おえかきごはん</title>
 
     <!-- フォントとBootstrapの読み込み -->
@@ -13,6 +20,8 @@
 
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
 </head>
 <body>
     <header>
