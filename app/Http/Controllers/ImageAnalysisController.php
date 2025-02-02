@@ -143,7 +143,17 @@ class ImageAnalysisController extends Controller
             $categories['result']['small'] ?? []
         );
 
+        $closestCategory = null;
+        $closestCategoryId = null;
+        $shortestDistance = -1;
+
         foreach ($allCategories as $category) {
+
+            $categoryName = $category['categoryName'];
+
+            // Levenshtein距離を計算
+            $levDistance = levenshtein($analysis, $categoryName);
+
             if ($category['categoryName'] === $analysis) {
                 // 正規表現でcategoryUrlからcategoryIdを抽出
                 if (preg_match('/category\/([\d\-]+)\//', $category['categoryUrl'], $matches)) {
@@ -151,7 +161,20 @@ class ImageAnalysisController extends Controller
                     return $matches[1]; // categoryId (例: "17-159-2155")
                 }
             }
+                        // 最も近いカテゴリを更新
+            if ($levDistance < $shortestDistance || $shortestDistance < 0) {
+                $closestCategory = $category;
+                $shortestDistance = $levDistance;
+            }
         }
+        // 類似度の高いカテゴリを返す
+        if ($closestCategory !== null) {
+            if (preg_match('/category\/([\d\-]+)\//', $closestCategory['categoryUrl'], $matches)) {
+                Log::info('類似カテゴリを選択:', ['categoryId' => $matches[1], 'categoryName' => $closestCategory['categoryName']]);
+                return $matches[1]; // 最も近いカテゴリのIDを返す
+            }
+        }
+
         Log::warning('一致するカテゴリーが見つかりませんでした:', ['analysis' => $analysis]);
         return null;
     }
