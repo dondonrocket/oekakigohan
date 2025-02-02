@@ -223,34 +223,28 @@ class ImageAnalysisController extends Controller
      */
     private function parseRecipe(string $content): array
     {
-        // テキストを行ごとに分割
         $lines = explode("\n", $content);
 
         $materials = [];
         $steps = [];
         $currentSection = null;
+        $stepCounter = 1; // 手順番号のカウンター（最初は1）
 
         foreach ($lines as $line) {
             $line = trim($line);
+            if (empty($line)) continue;
 
-            if (empty($line)) {
-                continue; // 空行をスキップ
-            }
-
-            // セクションの判別
             if ($this->isSectionStart($line, $currentSection)) {
                 continue;
             }
 
-            // セクション内容の解析
             if ($currentSection === 'materials') {
                 $this->addMaterial($line, $materials);
             } elseif ($currentSection === 'steps') {
-                $this->addStep($line, $steps);
+                $this->addStep($line, $steps, $stepCounter); // カウンターを渡す
             }
         }
 
-        // 必要ならデフォルト値を設定
         $this->setDefaultValues($materials, $steps);
 
         return [
@@ -258,6 +252,7 @@ class ImageAnalysisController extends Controller
             'steps' => $steps,
         ];
     }
+
 
     // セクションの開始を判別し、現在のセクションを設定する
     private function isSectionStart(string $line, ?string &$currentSection): bool
@@ -284,30 +279,31 @@ class ImageAnalysisController extends Controller
     }
 
     // 手順の行を追加
-    private function addStep(string $line, array &$steps): void
+// 手順の行を追加
+    private function addStep(string $line, array &$steps, int &$stepCounter): void
     {
-        // 手順番号を抽出
+        // 手順番号付きの行（例: "1. 材料を準備する"）を処理
         if (preg_match('/^\s*(\d+)\.\s*(.+)$/u', $line, $matches)) {
-            $step_number = $matches[1];
             $step_description = $matches[2];
 
-            // メインの手順（例: "材料を準備する"）を追加
+            // メインの手順を追加
             $steps[] = [
-                'step_number' => $step_number,
+                'step_number' => $stepCounter, // ループの外で管理しているカウンターを使用
                 'description' => $step_description,
-                'sub_steps' => [] // サブ項目を保持するための配列
+                'sub_steps' => []
             ];
-        }
 
-        // 役割分担の行（例: - 大人が豚肉を一口大に切る）を処理
+            $stepCounter++; // 次の手順番号に進める
+        }
+        // 役割分担の行（例: "- 大人が豚肉を一口大に切る"）を処理
         elseif (preg_match('/^\s*-\s*(.+)$/u', $line, $roleMatches)) {
-            // サブ項目として追加
             if (count($steps) > 0) {
                 // 最後に追加した手順のサブ項目として追加
                 $steps[count($steps) - 1]['sub_steps'][] = $roleMatches[1];
             }
         }
     }
+
 
 
 
