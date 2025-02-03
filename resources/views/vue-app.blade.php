@@ -206,7 +206,7 @@ main {
     position: fixed;
     top: 0;
     left: 100%;/*leftの値を変更してメニューを画面外へ*/
-    z-index: 80;
+    z-index: 1000;
     background-color: #ffffff;
     transition: all 0.5s;/*アニメーション設定*/
     /* opacity: 0.75; */
