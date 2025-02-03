@@ -166,15 +166,4 @@ export default {
     padding: 9px 15px 10px 0;
     position: relative;
 }
-.home a::before {
-    content: "";
-    width: 7px;
-    height: 7px;
-    border-top: solid 2px #111111;
-    border-right: solid 2px #111111;
-    transform: rotate(45deg);
-    position: absolute;
-    right: 11px;
-    top: 16px;
-}
 </style>

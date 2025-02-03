@@ -168,7 +168,7 @@ main {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 80;
+    z-index: 1000;
     background-color: #ffffff;
 }
 .menu-content ul {
