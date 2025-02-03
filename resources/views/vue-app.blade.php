@@ -52,9 +52,6 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto text-center">
                         <li class="nav-item">
-                            <a class="nav-link custom-nav-link" href="/">ホーム</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link custom-nav-link" href="/contact">お問い合わせ</a>
                         </li>
                     </ul>
@@ -212,7 +209,7 @@ main {
     z-index: 80;
     background-color: #ffffff;
     transition: all 0.5s;/*アニメーション設定*/
-    opacity: 0.75;
+    /* opacity: 0.75; */
 }
 
 #menu-btn-check:checked ~ .menu-content {

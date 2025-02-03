@@ -40,6 +40,7 @@
                 <!-- フォームの入力項目など -->
                 <button type="submit">送信</button>
             </form>
+            <div class="home"><a href="/">ホームへ戻る</a></div>
         </div>
     </div>
 </template>
@@ -153,5 +154,27 @@ export default {
     color: red;
     font-weight: bold;
     margin-top: 10px;
+}
+
+.home a {
+    display: block;
+    width: 100%;
+    font-size: 15px;
+    box-sizing: border-box;
+    color: #111111;
+    text-decoration: none;
+    padding: 9px 15px 10px 0;
+    position: relative;
+}
+.home a::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-top: solid 2px #111111;
+    border-right: solid 2px #111111;
+    transform: rotate(45deg);
+    position: absolute;
+    right: 11px;
+    top: 16px;
 }
 </style>
