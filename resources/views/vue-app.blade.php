@@ -212,7 +212,7 @@ main {
     z-index: 80;
     background-color: #ffffff;
     transition: all 0.5s;/*アニメーション設定*/
-    opacity: 0.75;
+    /* opacity: 0.75; */
 }
 
 #menu-btn-check:checked ~ .menu-content {
