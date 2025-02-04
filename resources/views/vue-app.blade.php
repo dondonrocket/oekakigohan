@@ -83,7 +83,7 @@ main {
 .nav-link.custom-nav-link {
     color: #535353 !important;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 0.8rem;
     padding: 0.5rem 1rem;
     transition: color 0.3s ease;
 }
