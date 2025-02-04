@@ -24,44 +24,22 @@
 
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-            <div class="container-fluid">
-                <!-- ロゴ -->
-                <a class="navbar-brand d-flex align-items-center" href="/">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="navbar-logo me-2">
-                </a>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <!-- ロゴ -->
+            <a class="navbar-brand d-flex align-items-center" href="/">
+                <img src="{{ asset('images/logo.png') }}" alt="Logo" class="navbar-logo me-2">
+            </a>
 
-                <!-- ハンバーガーメニュー -->
-                <!-- <div class="hamburger-menu">
-                    <input type="checkbox" id="menu-btn-check">
-                    <label for="menu-btn-check" class="menu-btn"><span></span></label> -->
-                    <!--ここからメニュー-->
-                    <!-- <div class="menu-content">
-                        <ul>
-                            <li>
-                                <a href="/contact">お問い合わせ</a>
-                            </li>
-                        </ul>
-                    </div> -->
-                    <!--ここまでメニュー-->
-                <!-- </div> -->
-
-
-                <!-- ナビゲーションメニュー -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto text-center">
-                        <li class="nav-item">
-                            <a class="nav-link custom-nav-link" href="/">ホーム</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link custom-nav-link" href="/contact">お問い合わせ</a>
-                        </li>
-                    </ul>
-                </div>
+            <!-- ナビゲーションメニュー -->
+            <div class="d-flex ms-auto">
+                <a class="nav-link custom-nav-link" href="/contact">お問い合わせ</a>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
 
     <!-- メインコンテンツ -->
     <main class="custom-space custom-bg-color custom-bg-size">
