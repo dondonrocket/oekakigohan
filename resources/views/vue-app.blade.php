@@ -33,7 +33,7 @@
             </a>
 
             <!-- ナビゲーションメニュー -->
-            <div class="d-flex ms-auto">
+            <div class="ms-auto">
                 <a class="nav-link custom-nav-link" href="/contact">お問い合わせ</a>
             </div>
         </div>
