@@ -33,19 +33,19 @@
                 </a>
 
                 <!-- ハンバーガーメニュー -->
-                <div class="hamburger-menu">
+                <!-- <div class="hamburger-menu">
                     <input type="checkbox" id="menu-btn-check">
-                    <label for="menu-btn-check" class="menu-btn"><span></span></label>
+                    <label for="menu-btn-check" class="menu-btn"><span></span></label> -->
                     <!--ここからメニュー-->
-                    <div class="menu-content">
+                    <!-- <div class="menu-content">
                         <ul>
                             <li>
                                 <a href="/contact">お問い合わせ</a>
                             </li>
                         </ul>
-                    </div>
+                    </div> -->
                     <!--ここまでメニュー-->
-                </div>
+                <!-- </div> -->
 
 
                 <!-- ナビゲーションメニュー -->
@@ -235,9 +235,9 @@ main {
         font-size: 1.2rem;
     }
 
-    .hamburger-menu {
+    /* .hamburger-menu {
         display: block;
-    }
+    } */
 }
 
 /* フッターのスタイル */
