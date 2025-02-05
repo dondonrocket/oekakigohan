@@ -75,6 +75,9 @@ class ImageAnalysisController extends Controller
             // 楽天APIを使ってカテゴリー別ランキングを取得
             $rakutenApiResponse = $this->fetchRakutenCategoryRanking($matchedCategory);
 
+            Log::info('レシピID試し:', [$rakutenApiResponse]);
+
+
             // 追加のレシピ生成リクエスト
             $recipeResult = OpenAI::chat()->create([
                 'model' => 'gpt-4o-mini',
