@@ -67,7 +67,7 @@ class ImageAnalysisController extends Controller
                                     - 色とりどり → 酢豚、皿うどん
 
                                 # 出力フォーマット
-                                必ず料理名のみ（例: カレーライス）。説明や補足は不要。
+                                必ず料理名のみ（例: カレーライス）。説明や補足は不要。特定できていない旨の報告も不要。
                                 "],
 
                             ["type" => "text", "text" => ""],
