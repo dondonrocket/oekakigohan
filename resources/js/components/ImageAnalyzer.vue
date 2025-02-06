@@ -31,7 +31,7 @@
                                         name="file"
                                         style="display: none"
                                     />
-                                    1.子どもが<br />描いた絵を<br />選ぶ
+                                    1.絵を選ぶ
                                 </label>
                             </div>
                             <div class="flex-right">
