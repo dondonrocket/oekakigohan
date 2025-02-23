@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use OpenAI\Laravel\Facades\OpenAI;
 use Illuminate\Http\JsonResponse;
+use Intervention\Image\Facades\Image;
 
 use Exception;
 
@@ -25,11 +26,24 @@ class ImageAnalysisController extends Controller
 
             // ファイルが画像であることを確認
             $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,heic,heif|max:2048',
             ]);
 
+            // HEIF/HEIC画像ならJPEGに変換
+            if (in_array($image->getClientOriginalExtension(), ['heif', 'heic'])) {
+                // Intervention Imageで変換
+                $convertedImage = Image::make($image->getPathname())->encode('jpg');
+
+                // 一時保存
+                $imagePath = 'images/' . uniqid() . '.jpg';
+                Storage::disk('public')->put($imagePath, $convertedImage);
+            } else {
+                // JPEG/PNGならそのまま保存
+                $imagePath = $image->store('images', 'public');
+            }
+
             // レシピ画像保存用に画像をセッションに保存
-            $imagePath = $image->store('images', 'public');
+            // $imagePath = $image->store('images', 'public');
             session(['temporary_image' => $imagePath]);
 
             // 画像ファイルをBase64エンコード
