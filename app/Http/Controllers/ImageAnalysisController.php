@@ -76,7 +76,7 @@ class ImageAnalysisController extends Controller
                         ],
                     ],
                 ],
-                'max_tokens' => 300,
+                'max_tokens' => 1000,
             ]);
             //初期化
             $analysis = null;
