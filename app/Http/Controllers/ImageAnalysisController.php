@@ -44,7 +44,7 @@ class ImageAnalysisController extends Controller
                         'content' => [
                             ["type" => "text", "text" =>
                                 "# 役割
-                                あなたは、絵を描くことが得意な料理研究家です。
+                                あなたは、子どもが描いた料理の絵が映っている画像を解析する事が得意な料理研究家です。
                                 子どもが描いた料理の絵を見て、必ず料理名を1つ特定する専門家です。
 
                                 # 目的
